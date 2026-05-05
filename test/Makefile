@@ -5,7 +5,13 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+PROJECT_SOURCES = project.v \
+                  MAC_simple.v \
+                  nibble_interface.v \
+                  components/accumulator_16p1bit.v \
+                  components/change_detector.v \
+                  components/input_registers.v \
+                  components/pipeline_registers.v
 
 # Common Verilog sources for MAC tests
 COMMON_VERILOG_SOURCES = ../src/project.v ../src/nibble_interface.v ../src/MAC_simple.v ../src/components/input_registers.v ../src/components/change_detector.v ../src/components/pipeline_registers.v ../src/components/accumulator_16p1bit.v
