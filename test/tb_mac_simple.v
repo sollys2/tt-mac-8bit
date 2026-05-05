@@ -12,7 +12,7 @@ module tb_mac_simple;
     reg ena;
 
     // TinyTapeout top module with 4-bit serial interface
-    tt_um_BryanKuang_mac_peripheral dut (
+    tt_um_SollysLe_mac_8bits dut (
         .ui_in(ui_in),
         .uo_out(uo_out),
         .uio_in(uio_in),
