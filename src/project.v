@@ -4,7 +4,7 @@
  */
 `default_nettype none
 
-module tt_um_BryanKuang_mac_peripheral (
+module tt_um_SollysLe_mac_8bits (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
