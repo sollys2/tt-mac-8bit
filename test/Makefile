@@ -3,10 +3,12 @@
 
 # defaults
 SIM ?= icarus
-FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = project.v
+
+# Common Verilog sources for MAC tests
+COMMON_VERILOG_SOURCES = ../src/project.v ../src/nibble_interface.v ../src/MAC_simple.v ../src/components/input_registers.v ../src/components/change_detector.v ../src/components/pipeline_registers.v ../src/components/accumulator_16p1bit.v
 
 ifneq ($(GATES),yes)
 
@@ -34,12 +36,26 @@ endif
 # Allow sharing configuration between design and testbench via `include`:
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
+# Default test: MAC tests
+test_mac:
+	$(MAKE) VERILOG_SOURCES="$(COMMON_VERILOG_SOURCES) tb_mac_simple.v" TOPLEVEL=tb_mac_simple MODULE=test_mac sim
+
+# Default target
+all: test_mac
+
 # Include the testbench sources:
 VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
 
-# List test modules to run, separated by commas and without the .py suffix:
-COCOTB_TEST_MODULES = test
+# MODULE is the basename of the Python test file
+MODULE = test
+
+# Backward compatibility - default to MAC test for make without target
+ifndef MAKECMDGOALS
+VERILOG_SOURCES = $(COMMON_VERILOG_SOURCES) tb_mac_simple.v
+TOPLEVEL = tb_mac_simple
+MODULE = test_mac
+endif
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
